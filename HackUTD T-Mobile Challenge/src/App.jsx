@@ -1,12 +1,15 @@
 import { useState } from "react";
 import tmobileLogo from "./assets/tmobile-logo-white.png"; // white transparent logo
+import AverageRatings from "./components/AverageRatings";
 
 export default function App() {
   const [dark, setDark] = useState(false);
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${dark ? "bg-black text-white" : "bg-white text-black"}`}
+      className={`min-h-screen transition-colors duration-300 ${
+        dark ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
       {/* Header */}
       <header className="relative h-20 md:h-24 bg-gradient-to-r from-[#E20074] via-[#ff0080] to-[#E20074] shadow-xl flex items-center justify-center">
@@ -35,10 +38,13 @@ export default function App() {
           <span className="block mx-auto h-full w-2/3 rounded-full bg-[#ff1aa6] blur-2xl opacity-40 animate-pulse" />
         </div>
       </header>
-
       {/* Content area */}
-      <main className="flex items-center justify-center h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)]">
-        <h1 className="text-2xl font-semibold">
+      <main className="flex flex-col items-center justify-start pt-10">
+        {/* ✅ Add the AverageRatings component here */}
+        <AverageRatings />
+
+        {/* Keep your existing example content */}
+        <h1 className="text-2xl font-semibold mt-10">
           {dark ? "Dark mode" : "Light mode"}
         </h1>
       </main>
