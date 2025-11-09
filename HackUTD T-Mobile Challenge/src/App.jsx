@@ -29,7 +29,7 @@ export default function App() {
         <p className="text-lg">
           Link:{" "}
           <a
-            href="https://docs.google.com/spreadsheets/d/1NxDKK02ujyuN1OZNrVcgA5HgrY4pNNWU411KrWivktc/edit?usp=sharing"
+            href="https://forms.gle/KbzwP8kZ8udcAcLFA"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#E20074] font-semibold underline hover:text-[#B1005C] transition">
