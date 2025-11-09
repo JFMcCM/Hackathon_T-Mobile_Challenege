@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "customer-feedback": {
+      ".read": true,
+      ".write": true,
+      "$feedbackId": {
+        ".validate": "newData.hasChildren(['type', 'content', 'createdAt']) && newData.child('type').isString() && newData.child('content').isString() && newData.child('createdAt').val() == now"
+      }
+    }
+  }
+}
