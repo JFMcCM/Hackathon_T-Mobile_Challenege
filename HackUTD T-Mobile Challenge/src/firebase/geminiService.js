@@ -146,6 +146,66 @@ ${textToAnalyze}`;
     }
 }
 
+// Function to generate recommendations based on sentiment analysis
+export async function generateRecommendations() {
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const querySnapshot = await getDocs(collection(db, 'SurveyResponses'));
+        
+        const allAnalyses = [];
+        for (const userDoc of querySnapshot.docs) {
+            const userData = userDoc.data();
+            if (userData.sentimentRating && userData.sentimentExplanation) {
+                allAnalyses.push({
+                    userId: userDoc.id,
+                    rating: userData.sentimentRating,
+                    explanation: userData.sentimentExplanation,
+                    keyIssues: userData.keyIssues || [],
+                    positiveAspects: userData.positiveAspects || [],
+                    originalData: userData
+                });
+            }
+        }
+
+        if (allAnalyses.length === 0) {
+            return { success: false, error: "No analyzed data found. Run sentiment analysis first." };
+        }
+
+        const analysisText = allAnalyses.map(a => 
+            `User ${a.userId}: Rating ${a.rating}/5\nIssues: ${a.keyIssues.join(', ')}\nStrengths: ${a.positiveAspects.join(', ')}`
+        ).join('\n\n');
+
+        const prompt = `Based on the following sentiment analysis data from ${allAnalyses.length} T-Mobile customers, provide strategic recommendations for T-Mobile to improve customer satisfaction.
+
+${analysisText}
+
+Analyze patterns across all responses and provide:
+1. **Top 3 Priority Improvements** - Most critical issues to address
+2. **Strengths to Maintain** - What's working well
+3. **Action Items** - Specific, actionable steps T-Mobile should take
+4. **Expected Impact** - How these improvements could affect customer satisfaction
+
+Format as JSON with fields: priorityImprovements (array), strengthsToMaintain (array), actionItems (array), expectedImpact (string)`;
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        
+        const jsonText = extractJSON(text);
+        const recommendations = JSON.parse(jsonText);
+
+        return { 
+            success: true, 
+            totalCustomersAnalyzed: allAnalyses.length,
+            averageSentimentRating: (allAnalyses.reduce((sum, a) => sum + a.rating, 0) / allAnalyses.length).toFixed(2),
+            recommendations: recommendations
+        };
+    } catch (error) {
+        console.error('Error generating recommendations:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 // Main function to run the analysis
 async function main() {
     try {
@@ -162,6 +222,11 @@ async function main() {
             const result = await analyzeSentiments();
             console.log("Analysis complete!");
             console.log("Result:", JSON.stringify(result, null, 2));
+            
+            console.log("\n📈 Generating strategic recommendations...");
+            const recommendations = await generateRecommendations();
+            console.log("\n🎯 STRATEGIC RECOMMENDATIONS:");
+            console.log(JSON.stringify(recommendations, null, 2));
         } else {
             console.log("⚠️ No data found in the SurveyResponses collection. Please add some test data first.");
         }
