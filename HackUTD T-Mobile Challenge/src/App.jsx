@@ -7,10 +7,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
-        dark ? "bg-black text-white" : "bg-white text-black"
-      }`}
-    >
+      className={`min-h-screen transition-colors duration-300 ${dark ? "bg-black text-white" : "bg-white text-black"}`}>
       {/* Header */}
       <header className="relative h-20 md:h-24 bg-gradient-to-r from-[#E20074] via-[#ff0080] to-[#E20074] shadow-xl flex items-center justify-center">
         <img src={tmobileLogo} alt="T-Mobile" className="h-[700%] w-auto select-none pointer-events-none drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
@@ -26,6 +23,7 @@ export default function App() {
           <span className="block mx-auto h-full w-2/3 rounded-full bg-[#ff1aa6] blur-2xl opacity-40 animate-pulse" />
         </div>
       </header>
+
       {/* Content area */}
       <main className="flex flex-col items-center justify-start pt-10">
         <p className="text-lg">
