@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import tmobileLogo from "./assets/tmobile-logo-white.png";
 
 export default function App() {
@@ -30,11 +30,13 @@ export default function App() {
         {/* Survey link */}
         <p className="text-lg">
           Link:{" "}
-          <Link
-            to="/survey"
+          <a
+            href="https://forms.gle/n9nrmdFvrW6xLpeGA"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-[#E20074] font-semibold underline hover:text-[#B1005C] transition">
             Survey Link
-          </Link>
+          </a>
         </p>
       </main>
     </div>
