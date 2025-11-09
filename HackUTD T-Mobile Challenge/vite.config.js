@@ -4,5 +4,4 @@ import tailwind from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwind()],
-  base: '/Hackathon_T-Mobile_Challenge/',
 })
