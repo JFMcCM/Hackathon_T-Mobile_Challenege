@@ -28,10 +28,16 @@ export default function App() {
       </header>
       {/* Content area */}
       <main className="flex flex-col items-center justify-start pt-10">
-        {/* Keep your existing example content */}
-        <h1 className="text-2xl font-semibold mt-10">
-          {dark ? "Dark mode" : "Light mode"}
-        </h1>
+        <p className="text-lg">
+          Link:{" "}
+          <a
+            href="https://docs.google.com/spreadsheets/d/1NxDKK02ujyuN1OZNrVcgA5HgrY4pNNWU411KrWivktc/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#E20074] font-semibold underline hover:text-[#B1005C] transition">
+            Survey Link
+          </a>
+        </p>
       </main>
     </div>
   );
